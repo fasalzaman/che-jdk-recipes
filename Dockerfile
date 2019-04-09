@@ -13,6 +13,18 @@ FROM eclipse/centos_jdk8
 ARG OC_VERSION=3.11.43
 ARG ODO_VERSION=v0.0.17
 
+# Install Cmake 3.6
+RUN wget https://cmake.org/files/v3.6/cmake-3.6.2.tar.gz
+RUN tar -zxvf cmake-3.6.2.tar.gz
+RUN cd cmake-3.6.2
+RUN sudo yum group install "Development Tools"
+RUN sudo ./bootstrap --prefix=/usr/local
+RUN sudo make
+RUN sudo make install
+RUN echo export PATH=/usr/local/bin:$PATH:$HOME/bin >> ~/.bash_profile
+RUN source ~/.bash_profile
+
+
 # Install nss_wrapper and tools
 RUN sudo yum update -y && \
     sudo yum install -y cmake gettext make gcc && \
