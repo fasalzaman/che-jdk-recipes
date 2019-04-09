@@ -1,3 +1,5 @@
+
+    
 # Copyright (c) 2012-2018 Red Hat, Inc.
 # All rights reserved. This program and the accompanying materials
 # are made available under the terms of the Eclipse Public License v1.0
@@ -61,7 +63,19 @@ ENV LANG="C.UTF-8"
 
 # Maven settings
 COPY ./settings.xml $HOME/.m2/settings.xml
+RUN wget https://spektraazurelabs.blob.core.windows.net/openshift-jboss/m2_folder_preloaded.tgz 
+RUN tar -xzvf m2_folder_preloaded.tgz
+RUN rm m2_folder_preloaded.tgz
+RUN cd $HOME
+#install RHAMT
+RUN wget https://spektraazurelabs.blob.core.windows.net/openshift-jboss/migrationtoolkit-rhamt-cli-4.0.0.Beta4-offline.zip
+RUN unzip migrationtoolkit-rhamt-cli-4.0.0.Beta4-offline.zip
 
+# download Jboss EAP 7.1.0
+RUN wget https://spektraazurelabs.blob.core.windows.net/openshift-jboss/jboss-eap-7.1.0.zip 
+
+# Intall tree
+RUN sudo yum install tree -y
 # Give write access to /home/user for 
 # users with an arbitrary UID 
 RUN sudo chgrp -R 0 /home/user \
